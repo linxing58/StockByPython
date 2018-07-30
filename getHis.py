@@ -7,8 +7,9 @@ engine = create_engine('postgresql+psycopg2://postgres:linxing@132.232.16.101:54
 #设定历史数据的时间
 df = ts.get_stock_basics()
 for indexs in df.index:
-    hisdata=ts.get_hist_data(indexs,start='2017-01-01',end='2018-07-30')
-    hisdata.to_sql('hist_data', engine, if_exists='replace')
+    hisdf=ts.get_hist_data(indexs,start='2017-01-01',end='2018-07-30')
+    hisdf['code']=indexs
+    hisdf.to_sql('hist_data', engine,if_exists='replace')
 
 # ts.get_h_data('002337') #前复权
 # ts.get_h_data('002337', autype='hfq') #后复权
@@ -32,8 +33,8 @@ for indexs in df.index:
 # df = ts.get_today_ticks('601333')
 # df.head(10)
 
-#大盘指数行情列表
-df = ts.get_index()
-
-#大单交易数据
-df = ts.get_sina_dd('600848', date='2015-12-24') #默认400手
+# #大盘指数行情列表
+# df = ts.get_index()
+#
+# #大单交易数据
+# df = ts.get_sina_dd('600848', date='2015-12-24') #默认400手
