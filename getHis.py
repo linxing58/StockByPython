@@ -8,8 +8,9 @@ engine = create_engine('postgresql+psycopg2://postgres:linxing@132.232.16.101:54
 df = ts.get_stock_basics()
 for indexs in df.index:
     hisdf=ts.get_hist_data(indexs,start='2017-01-01',end='2018-07-30')
-    hisdf['code']=indexs
-    hisdf.to_sql('hist_data', engine,if_exists='replace')
+    if hisdf is not None:
+        hisdf['code'] = indexs
+        hisdf.to_sql('hist_data', engine, if_exists='append')
 
 # ts.get_h_data('002337') #前复权
 # ts.get_h_data('002337', autype='hfq') #后复权
